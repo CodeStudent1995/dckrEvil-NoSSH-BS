@@ -40,11 +40,11 @@ export phppay
 
 ## Receives user input - HOST:PORT
 HOST="$1"
-if [ $1 != " " &> /dev/null ]
+if [ $HOST != " " &> /dev/null ]
 	then
 		## Checking if Docker API is infact running on the given host and port
-		CHECK=$(curl -s http://$HOST/images/json &> /tmp/djson.txt; echo $?)
-			if [ $CHECK != 0]
+		CHECK=$(curl -sm 5 http://$HOST/images/json &> /tmp/djson.txt; echo $?)
+			if [ $CHECK != 0 ]
 				then
 						echo -e "\n Please check if you entered the host and port correctly... Something wrong isn't right x.x"
 						rm /tmp/djson.txt
@@ -59,9 +59,6 @@ if [ $1 != " " &> /dev/null ]
 					echo -e "Done\n"
 ## 		Closing the "Checking Docker API" IF statement
 			fi
-
-
-
 	else
 		echo "You need to set the host and port along with the script... SCRIPT HOST:PORT"
 		exit 2 					# Exit error 2 == no HOST:PORT was given
