@@ -1,5 +1,4 @@
 # DOCKEREVIL - No SSH-BS!
-
 So... In the original script we use the Docker API to write our SSH public key to the victim host, allowing us to access it as root. But I noticed that the script will fail if the SSH directory structure isn't created on the host machine. That can easily be treated on the original script, checking for the file structure and creating if necessary before we inject our SSH key, but what if the SSH daemon isn't even running on the host machine? D:
 
 For this reason I'm creating this new repository, which might be absorbed by the original DOCKEREVIL repo in the future.
